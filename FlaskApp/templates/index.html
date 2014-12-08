@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" media="screen" href="{{ url_for('static', filename="css/bootstrap.min.css") }}">
+	<meta charset="UTF-8">
+	<title>FlaskApp</title>
+</head>
+<body>
+
+    {% set navBar = [('/', 'index', 'Home'),
+                    ('/about', 'about', 'About'),
+                    ('/contact', 'contact', 'Contact'),
+                    ('/form', 'form', 'Form')] %}
+
+    {% set activePage = activePage|default('index') %}
+
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/">FlaskApp</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar">
+              <ul class="nav navbar-nav">
+                {% for href, id, caption in navBar %}
+                <li {% if id == activePage %} class="active" {% endif %} ><a href = "{{ href|e }}"> {{ caption }} </a></li>
+                {% endfor %}
+             <!--    <li class="active"><a href="/about">About <span class="sr-only">(current)</span></a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/form">Form</a></li> -->
+              </ul>
+              
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="page-header">
+            <h1>{{ title }}</h1>
+        </div>
+
+        <p>{{ paragraph }}</p>
+        
+
+	</div>
+</body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="{{ url_for("static", filename="js/bootstrap.min.js") }}"></script>
+
+</html>
