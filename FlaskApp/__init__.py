@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request
 from flask_wtf import Form
-from wtforms import StringField, BooleanField
-from wtforms.validators import DataRequired
+from wtforms import StringField, BooleanField, FloatField
+from wtforms.validators import DataRequired, NumberRange
+
 
 app = Flask(__name__)
-app.debug = True
+app.config['SECRET_KEY'] = 'lskhjagdfl;sahjkgd'
 
 
 @app.route("/")
@@ -47,12 +48,16 @@ def form():
     title = "Form"
     paragraph = "How's this for a form?"
     activePage = "form"
+
+    class DivideForm(Form):
+        number = FloatField("Number")
+        divide_by = FloatField("Divide by", validators=[NumberRange(min=1)])
+
+    form = DivideForm()
     result = None
 
-    if request.method == 'POST':
-        number = float(request.form['number'])
-        divide_by = float(request.form['divide_by'])
-        result = number / divide_by
+    if form.validate_on_submit():
+        result = form.number.data / form.divide_by.data
 
     return render_template(
         "divide.html",
@@ -60,8 +65,10 @@ def form():
         title=title,
         pageType=pageType,
         activePage=activePage,
-        result=result)
+        result=result,
+        form=form)
 
 
 if __name__ == "__main__":
     app.run()
+    app.debug = True

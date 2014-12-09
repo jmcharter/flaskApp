@@ -9,19 +9,42 @@
 
     <body>
         {% block form %}
-        <form method="post">
-            <label for="number">Number:</label>
-            <input type="text" name="number" id="number">
 
-            <label for="divide_by">Divide by:</label>
-            <input type="text" name="divide_by" id="divide_by">
 
-            <input type="submit" value="Calculate"/>
+        <form method="post" action="{{ url_for('form') }}">
+            {{ form.hidden_tag() }}
+
+            {{ form.number.label }} {{ form.number() }}
+            {% if form.number.errors %}
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                        Error: {{ ', '.join(form.number.errors) }}
+                </div>
+            {% endif %}
+
+            {{ form.divide_by.label }} {{ form.divide_by() }}
+            {% if form.divide_by.errors %}
+               <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                        Error: {{ ', '.join(form.divide_by.errors) }}
+                </div>
+                
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary btn-xs">Do the math</button>
         </form>
         {% if result %}        
             <p>Result is: {{ result }}</p>
         {% endif %}
-        {% endblock %}
+        
 
+        
+        
+        {% endblock %}
     </body>
 </html>
+
+
+
