@@ -51,7 +51,12 @@ def form():
 
     class DivideForm(Form):
         number = FloatField("Number")
-        divide_by = FloatField("Divide by", validators=[NumberRange(min=1)])
+        divide_by = FloatField(
+            "Divide by",
+            validators=[NumberRange(
+                min=1,
+                message="Please only enter numbers. \
+                Number must be greater than 1.")])
 
     form = DivideForm()
     result = None

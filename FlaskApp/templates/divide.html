@@ -9,36 +9,45 @@
 
     <body>
         {% block form %}
-
-
-        <form method="post" action="{{ url_for('form') }}">
+        <div class="container">
+        
+        <form role="form" method="post" action="{{ url_for('form') }}">
             {{ form.hidden_tag() }}
 
-            {{ form.number.label }} {{ form.number() }}
-            {% if form.number.errors %}
-                <div class="alert alert-danger" role="alert">
+            <div class="col-sm-1">{{ form.number.label }} </div><div class="col-sm-2"> {{ form.number() }}</div>
+            
+            <div class="col-sm-1">{{ form.divide_by.label }} </div><div class="col-sm-2"> {{ form.divide_by() }}</div>
+            
+            
+
+           <div class="col-sm-1"> <button type="submit" class="btn btn-primary btn-xs">Do the math</button></div>
+           <div class="row"></div>
+
+           {% if form.number.errors %}
+                <div><div class="alert alert-danger" role="alert">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     <span class="sr-only">Error:</span>
                         Error: {{ ', '.join(form.number.errors) }}
-                </div>
+                </div></div>
             {% endif %}
 
-            {{ form.divide_by.label }} {{ form.divide_by() }}
+
             {% if form.divide_by.errors %}
-               <div class="alert alert-danger" role="alert">
+               <div><div class="alert alert-danger" role="alert">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     <span class="sr-only">Error:</span>
                         Error: {{ ', '.join(form.divide_by.errors) }}
-                </div>
-                
-            {% endif %}
+                </div></div>
 
-            <button type="submit" class="btn btn-primary btn-xs">Do the math</button>
+            {% endif %}
         </form>
+
+        <div class="row col-sm-12 bg-success">
         {% if result %}        
-            <p>Result is: {{ result }}</p>
+            <h4>Result is: {{ result }}</h4>
         {% endif %}
-        
+        </div>
+        </div>
 
         
         
