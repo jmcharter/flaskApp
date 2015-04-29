@@ -1,7 +1,9 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, render_template, request
 from flask_wtf import Form
 from wtforms import StringField, BooleanField, FloatField
 from wtforms.validators import DataRequired, NumberRange
+from retireapp import *
 
 
 app = Flask(__name__)
@@ -23,7 +25,7 @@ def test():
 def about():
 
     title = "About"
-    paragraph = "How's this for an about page?"
+    paragraph = "Flask based Retirement Calculator." u"©" "2015 Jon Charter"
     activePage = "about"
 
     return render_template(
@@ -72,6 +74,47 @@ def form():
         activePage=activePage,
         result=result,
         form=form)
+
+
+@app.route("/app", methods=['GET', 'POST'])
+def retire():
+    pageType = "app"
+    title = "Retirement Calculator"
+    paragraph = "The retirement calculator!"
+    activePage = "app"
+
+    class RetirementCalculator(Form):
+        income = FloatField("What is your annual income?")
+        housecost = FloatField("How much does your rent cost per month?")
+        bills = FloatField("How much do your bills cost each month?")
+        uage = FloatField("How old are you?")
+        rage = FloatField("At what age do you plan to retire?")
+        pension = FloatField("How much do you currently have saved towards "
+                             "retirement? (Including pension)")
+
+    app = RetirementCalculator()
+    result = None
+
+    if app.validate_on_submit():
+        calculation = RetireApp(
+            app.income.data,
+            app.housecost.data,
+            app.bills.data,
+            app.uage.data,
+            app.rage.data,
+            app.pension.data
+        )
+        calculation.Calculate()
+        result = calculation.Statement()
+
+    return render_template(
+        "retire.html",
+        paragraph=paragraph,
+        title=title,
+        pageType=pageType,
+        activePage=activePage,
+        result=result,
+        app=app)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,88 @@
+{% extends "index.html" %}
+
+{% block app %}
+
+<div class="container">
+    <form class="form-horizontal" role="form" method="post" action="{{ url_for('retire') }}">
+        {{ app.hidden_tag() }}
+    
+         <div class="form-group">
+            <span class="col-sm-5 control-label">{{ app.income.label }} </span>
+            <div class="col-sm-7">
+                {{ app.income() }}
+                {% if app.income.errors %}
+                    <strong><span class="text-danger"> Error: {{ ', '.join(app.income.errors) }} </span></strong>
+                {% endif %}
+            </div>
+         </div>   
+
+         <div class="form-group">
+            <span class="col-sm-5 control-label">
+                {{ app.housecost.label(style='margin-bottom: 0') }}  
+                <p class="help-block" style="margin-top: 1px; margin-bottom: 5px">
+                    Enter 0 if you plan to own your property
+                </p>
+            </span>
+            
+            <div class="col-sm-7">
+                {{ app.housecost() }}
+                {% if app.housecost.errors %}
+                    <strong><span class="text-danger"> Error: {{ ', '.join(app.housecost.errors) }} </span></strong>
+                {% endif %}
+            </div>
+         </div>   
+
+         <div class="form-group">
+            <span class="col-sm-5 control-label">{{ app.bills.label }} </span>
+            <div class="col-sm-7">
+                {{ app.bills() }}
+                {% if app.bills.errors %}
+                    <strong><span class="text-danger"> Error: {{ ', '.join(app.bills.errors) }} </span></strong>
+                {% endif %}
+            </div>
+         </div>
+
+         <div class="form-group">
+            <span class="col-sm-5 control-label">{{ app.uage.label }} </span>
+            <div class="col-sm-7">
+                {{ app.uage() }}
+                {% if app.uage.errors %}
+                    <strong><span class="text-danger"> Error: {{ ', '.join(app.uage.errors) }} </span></strong>
+                {% endif %}
+            </div>
+         </div>
+         
+         <div class="form-group">
+            <span class="col-sm-5 control-label">{{ app.rage.label }} </span>
+            <div class="col-sm-7">
+                {{ app.rage() }}
+                {% if app.rage.errors %}
+                    <strong><span class="text-danger"> Error: {{ ', '.join(app.rage.errors) }} </span></strong>
+                {% endif %}
+            </div>
+         </div>
+
+         <div class="form-group">
+            <span class="col-sm-5 control-label">{{ app.pension.label }} </span>
+            <div class="col-sm-7">
+                {{ app.pension() }}
+                {% if app.pension.errors %}
+                    <strong><span class="text-danger"> Error: {{ ', '.join(app.pension.errors) }} </span></strong>
+                {% endif %}
+            </div>
+         </div>
+
+        <div class="col-sm-offset-5 col-sm-7">
+            <button type="submit" class="btn btn-primary btn-xs">Do the math</button>
+
+        </div>
+
+    </form>
+
+    <div class="row col-sm-12 bg-success">
+        {% if result %}        
+            <h4>Result is: {{ result }}</h4>
+        {% endif %}
+
+    </div>
+{% endblock %}

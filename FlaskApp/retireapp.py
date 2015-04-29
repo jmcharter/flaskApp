@@ -1,9 +1,9 @@
+# -*- coding: utf-8 -*-
 class RetireApp:
 
-    def __init__(self, income, homeowner, housecost,
+    def __init__(self, income, housecost,
                  bills, uage, rage, pension):
         self.income = income
-        self.homeowner = homeowner
         self.housecost = housecost
         self.bills = bills
         self.uage = uage
@@ -45,26 +45,20 @@ class RetireApp:
                               ((self.monthlySave[1] / self.income) * 1200),
                               ((self.monthlySave[2] / self.income) * 1200)]
 
-    def Statement(self, currency, option=1):
+    def Statement(self, currency=u"£", option=1):
 
         x = option
 
         statement = (
             """If you live until %i, then you'll need to save an additional:
-%s%s
+%s%s.
 
 This means that as of now, and until retirement, you need to save:
-%s%s per month
-(That is %.2f%% of your annual salary) 
+%s%s per month.
+(That is %.2f%% of your annual salary).
 """ 
             % (self.lifeEx[x], currency, "{:,.2f}".format(self.reqMoney[x]),
                 currency, "{:,.2f}".format(self.monthlySave[x]),
                 self.incomePercent[x]))
 
         return statement
-
-flask = RetireApp(16000, True, 0, 344444, 22, 65, 0)
-
-option = 1
-flask.Calculate()
-print(flask.Statement("£"))
